@@ -801,12 +801,27 @@ document
     .getElementById("newGameButton")
     .addEventListener(
         "click",
-        startNewGame
+        newGame
+);
+document
+    .getElementById("newStat")
+    .addEventListener(
+        "click",
+        cancelStats
     );
+
 function newGame() {
 
     localStorage.removeItem(
         "yahtzee-save"
+    );
+
+    location.reload();
+}
+function cancelStats() {
+
+    localStorage.removeItem(
+        "yahtzee-stats"
     );
 
     location.reload();

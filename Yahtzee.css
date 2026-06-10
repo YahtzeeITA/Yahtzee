@@ -416,7 +416,9 @@ body.light {
         width: 100%;
     }
 }
-#newGameButton {
+#newGameButton,
+#newGameBtn,
+#newStat{
     position: relative;
     border: 1px solid rgba(255,255,255,.15);
     background: linear-gradient( 180deg, rgba(255,255,255,.20), rgba(255,255,255,.05) );
@@ -432,7 +434,9 @@ body.light {
     box-shadow: 0 8px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25), inset 0 -2px 4px rgba(0,0,0,.15);
 }
 
-    #newGameButton::before {
+    #newGameButton::before,
+    #newGameBtn::before,
+    #newStat::before {
         content: "";
         position: absolute;
         top: 0;
@@ -444,17 +448,23 @@ body.light {
         transition: .7s;
     }
 
-    #newGameButton:hover {
+    #newGameButton:hover,
+    #newGameBtn:hover,
+    #newStat:hover {
         transform: translateY(-3px);
         border-color: rgba(255,255,255,.3);
         box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 20px rgba(251,191,36,.20), inset 0 1px 0 rgba(255,255,255,.3);
     }
 
-        #newGameButton:hover::before {
+        #newGameButton:hover::before,
+        #newGameBtn:hover::before,
+        #newStat:hover::before {
             left: 150%;
         }
 
-    #newGameButton:active {
+    #newGameButton:active,
+    #newGameBtn:active,
+    #newStat:active {
         transform: translateY(2px);
         box-shadow: 0 3px 10px rgba(0,0,0,.3), inset 0 2px 6px rgba(0,0,0,.25);
     }

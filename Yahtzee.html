@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAHTZEE</title>
+
+    <link rel="stylesheet" href="Yahtzee.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- HEADER -->
+
+        <header class="top-bar">
+
+            <div class="logo">
+                <h1>🎲 YAHTZEE</h1>
+            </div>
+            <div class="re-start">
+                <button id="newGameButton">
+                    Nuova Partita
+                </button>
+            </div>
+            <div class="game-info">
+
+                <div class="info-card">
+                    <span>Punteggio</span>
+                    <strong id="totalScore">0</strong>
+                </div>
+
+                <div class="info-card">
+                    <span>Turno</span>
+                    <strong id="turnNumber">1</strong>
+                </div>
+
+                <div class="info-card">
+                    <span>Lanci Rimasti</span>
+                    <strong id="rollsLeft">3</strong>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- MAIN -->
+
+        <main>
+
+            <!-- DADI -->
+
+            <section class="dice-section">
+
+                <div class="dice-container" id="diceContainer">
+
+                    <div class="die" data-index="0">
+                        <span class="lock">🔒</span>
+                        <span class="value">1</span>
+                    </div>
+
+                    <div class="die" data-index="1">
+                        <span class="lock">🔒</span>
+                        <span class="value">1</span>
+                    </div>
+
+                    <div class="die" data-index="2">
+                        <span class="lock">🔒</span>
+                        <span class="value">1</span>
+                    </div>
+
+                    <div class="die" data-index="3">
+                        <span class="lock">🔒</span>
+                        <span class="value">1</span>
+                    </div>
+
+                    <div class="die" data-index="4">
+                        <span class="lock">🔒</span>
+                        <span class="value">1</span>
+                    </div>
+
+                </div>
+
+                <button id="rollButton" class="roll-btn">
+                    🎲 Lancia Dadi
+                </button>
+
+            </section>
+
+            <!-- SCOREBOARD -->
+
+            <section class="scoreboard">
+
+                <h2>Tabellone Punteggi</h2>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Punti</th>
+                            <th>Anteprima</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- UPPER -->
+
+                        <tr class="category-row" data-category="ones">
+                            <td>Uno</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="twos">
+                            <td>Due</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="threes">
+                            <td>Tre</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="fours">
+                            <td>Quattro</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="fives">
+                            <td>Cinque</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="sixes">
+                            <td>Sei</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="bonus-row" id="bonusRow">
+                            <td>Bonus (63+)</td>
+                            <td id="bonusScore">0</td>
+                            <td>+35</td>
+                        </tr>
+
+                        <!-- LOWER -->
+
+                        <tr class="category-row" data-category="threeKind">
+                            <td>Tris</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="fourKind">
+                            <td>Poker</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="fullHouse">
+                            <td>Full House</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="smallStraight">
+                            <td>Scala Piccola</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="largeStraight">
+                            <td>Scala Grande</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="yahtzee">
+                            <td>Yahtzee</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                        <tr class="category-row" data-category="chance">
+                            <td>Chance</td>
+                            <td class="score-cell"></td>
+                            <td class="preview-cell"></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- STATISTICHE -->
+
+            <aside class="stats-panel">
+
+                <h2>Statistiche</h2>
+
+                <div class="stat">
+                    <span>Partite</span>
+                    <strong id="gamesPlayed">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Miglior Punteggio</span>
+                    <strong id="bestScore">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Media</span>
+                    <strong id="averageScore">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Yahtzee Totali</span>
+                    <strong id="yahtzeeCount">0</strong>
+                </div>
+
+            </aside>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL FINE PARTITA -->
+
+    <div id="gameOverModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>🏆 Partita Terminata</h2>
+
+            <div class="final-info">
+
+                <p>
+                    Punteggio Finale:
+                    <strong id="finalScore"></strong>
+                </p>
+
+                <p>
+                    Bonus:
+                    <strong id="finalBonus"></strong>
+                </p>
+
+                <p>
+                    Migliore Categoria:
+                    <strong id="bestCategory"></strong>
+                </p>
+
+            </div>
+
+            <button id="newGameBtn">
+                Nuova Partita
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- AUDIO -->
+
+    <audio id="rollSound" src="audio/roll.mp3"></audio>
+    <audio id="lockSound" src="audio/select.mp3"></audio>
+    <audio id="scoreSound" src="audio/score.mp3"></audio>
+    <audio id="winSound" src="audio/win.mp3"></audio>
+
+    <script src="Yahtzee.js"></script>
+
+</body>
+
+</html>

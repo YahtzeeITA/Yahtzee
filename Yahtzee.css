@@ -336,7 +336,7 @@ td {
 }
 
     .category-row:hover {
-        background: rgba(255,255,255,.05);
+        background: rgba(255,255,255,.2);
     }
 
     .category-row.used {

@@ -13,18 +13,44 @@
 
     <div class="app">
 
-        <!-- HEADER -->
-
         <header class="top-bar">
 
             <div class="logo">
                 <h1>🎲 YAHTZEE</h1>
             </div>
+
+            <div class="game-modes">
+
+                <button id="onePlayerBtn" class="mode-btn active">
+                    1 Giocatore
+                </button>
+
+                <button id="twoPlayersBtn" class="mode-btn">
+                    2 Giocatori
+                </button>
+
+            </div>
+
+            <div class="player-setup" id="playerSetup">
+
+                <input type="text"
+                       id="player1Name"
+                       placeholder="Nome Giocatore 1"
+                       value="Giocatore 1">
+
+                <input type="text"
+                       id="player2Name"
+                       placeholder="Nome Giocatore 2"
+                       value="Giocatore 2">
+
+            </div>
+
             <div class="re-start">
                 <button id="newGameButton">
                     Nuova Partita
                 </button>
             </div>
+
             <div class="game-info">
 
                 <div class="info-card">
@@ -42,11 +68,11 @@
                     <strong id="rollsLeft">3</strong>
                 </div>
 
+               
+
             </div>
 
         </header>
-
-        <!-- MAIN -->
 
         <main>
 
@@ -86,7 +112,12 @@
                 <button id="rollButton" class="roll-btn">
                     🎲 Lancia Dadi
                 </button>
-
+                <div class="current-player">
+                    <span>Giocatore Attivo:</span>
+                    <strong id="currentPlayer">
+                        Giocatore 1
+                    </strong>
+                </div>
             </section>
 
             <!-- SCOREBOARD -->
@@ -98,11 +129,23 @@
                 <table>
 
                     <thead>
+
                         <tr>
+
                             <th>Categoria</th>
-                            <th>Punti</th>
+
+                            <th id="player1Header">
+                                Giocatore 1
+                            </th>
+
+                            <th id="player2Header">
+                                Giocatore 2
+                            </th>
+
                             <th>Anteprima</th>
+
                         </tr>
+
                     </thead>
 
                     <tbody>
@@ -111,87 +154,110 @@
 
                         <tr class="category-row" data-category="ones">
                             <td>Uno</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="twos">
                             <td>Due</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="threes">
                             <td>Tre</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="fours">
                             <td>Quattro</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="fives">
                             <td>Cinque</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="sixes">
                             <td>Sei</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="bonus-row" id="bonusRow">
+
                             <td>Bonus (63+)</td>
-                            <td id="bonusScore">0</td>
+
+                            <td id="bonusScoreP1">
+                                0
+                            </td>
+
+                            <td id="bonusScoreP2">
+                                0
+                            </td>
+
                             <td>+35</td>
+
                         </tr>
 
                         <!-- LOWER -->
 
                         <tr class="category-row" data-category="threeKind">
                             <td>Tris</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="fourKind">
                             <td>Poker</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="fullHouse">
                             <td>Full House</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="smallStraight">
                             <td>Scala Piccola</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="largeStraight">
                             <td>Scala Grande</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="yahtzee">
                             <td>Yahtzee</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
                         <tr class="category-row" data-category="chance">
                             <td>Chance</td>
-                            <td class="score-cell"></td>
+                            <td class="score-cell-p1"></td>
+                            <td class="score-cell-p2"></td>
                             <td class="preview-cell"></td>
                         </tr>
 
@@ -201,7 +267,7 @@
 
             </section>
 
-            <!-- STATISTICHE -->
+            <!-- STATS -->
 
             <aside class="stats-panel">
 
@@ -226,16 +292,16 @@
                     <span>Yahtzee Totali</span>
                     <strong id="yahtzeeCount">0</strong>
                 </div>
+
                 <button id="newStat">
                     Azzera statistiche
                 </button>
+
             </aside>
 
         </main>
 
     </div>
-
-    <!-- MODAL FINE PARTITA -->
 
     <div id="gameOverModal" class="modal">
 
@@ -246,18 +312,22 @@
             <div class="final-info">
 
                 <p>
-                    Punteggio Finale:
-                    <strong id="finalScore"></strong>
+                    Vincitore:
+                    <strong id="winnerName"></strong>
                 </p>
 
                 <p>
-                    Bonus:
-                    <strong id="finalBonus"></strong>
+                    <span id="finalPlayer1Name">
+                        Giocatore 1
+                    </span>:
+                    <strong id="finalScoreP1"></strong>
                 </p>
 
                 <p>
-                    Migliore Categoria:
-                    <strong id="bestCategory"></strong>
+                    <span id="finalPlayer2Name">
+                        Giocatore 2
+                    </span>:
+                    <strong id="finalScoreP2"></strong>
                 </p>
 
             </div>
@@ -269,8 +339,6 @@
         </div>
 
     </div>
-
-    <!-- AUDIO -->
 
     <audio id="rollSound" src="audio/roll.mp3"></audio>
     <audio id="lockSound" src="audio/select.mp3"></audio>

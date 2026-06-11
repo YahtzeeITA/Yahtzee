@@ -1,15 +1,37 @@
-/* =====================================
-   YAHTZEE PROFESSIONAL
-   SCRIPT.JS
-===================================== */
-
 const TOTAL_CATEGORIES = 13;
-let bonusUnlocked = false;
-/* =====================================
-   STATE
-===================================== */
+
+let bonusUnlockedP1 = false;
+let bonusUnlockedP2 = false;
+
+const EMPTY_SCORE_CARD = () => ({
+
+    ones: null,
+    twos: null,
+    threes: null,
+    fours: null,
+    fives: null,
+    sixes: null,
+
+    threeKind: null,
+    fourKind: null,
+    fullHouse: null,
+    smallStraight: null,
+    largeStraight: null,
+    yahtzee: null,
+    chance: null
+
+});
 
 const game = {
+
+    mode: 1,
+
+    playerNames: [
+        "Giocatore 1",
+        "Giocatore 2"
+    ],
+
+    currentPlayer: 0,
 
     dice: [1, 2, 3, 4, 5],
 
@@ -25,25 +47,15 @@ const game = {
 
     turn: 1,
 
-    scores: {
+    scores: [
 
-        ones: null,
-        twos: null,
-        threes: null,
-        fours: null,
-        fives: null,
-        sixes: null,
+        EMPTY_SCORE_CARD(),
 
-        threeKind: null,
-        fourKind: null,
-        fullHouse: null,
-        smallStraight: null,
-        largeStraight: null,
-        yahtzee: null,
-        chance: null
-    }
+        EMPTY_SCORE_CARD()
+
+    ]
+
 };
-
 /* =====================================
    DOM
 ===================================== */
@@ -62,6 +74,30 @@ const turnNumberElement =
 
 const rollsLeftElement =
     document.getElementById("rollsLeft");
+
+const currentPlayerElement =
+    document.getElementById("currentPlayer");
+
+const onePlayerBtn =
+    document.getElementById("onePlayerBtn");
+
+const twoPlayersBtn =
+    document.getElementById("twoPlayersBtn");
+
+const playerSetup =
+    document.getElementById("playerSetup");
+
+const player1NameInput =
+    document.getElementById("player1Name");
+
+const player2NameInput =
+    document.getElementById("player2Name");
+
+const player1Header =
+    document.getElementById("player1Header");
+
+const player2Header =
+    document.getElementById("player2Header");
 
 /* =====================================
    AUDIO
@@ -85,6 +121,36 @@ const winSound =
 
 init();
 
+function getCurrentScores() {
+
+    return game.scores[
+        game.currentPlayer
+    ];
+
+}
+
+function getPlayerScores(index) {
+
+    return game.scores[index];
+
+}
+
+function getCurrentPlayerName() {
+
+    return game.playerNames[
+        game.currentPlayer
+    ];
+
+}
+
+function getOpponentPlayer() {
+
+    return game.currentPlayer === 0
+        ? 1
+        : 0;
+
+}
+
 function init() {
 
     loadGame();
@@ -93,13 +159,129 @@ function init() {
 
     bindCategories();
 
+    bindMultiplayer();
+
     updateDiceUI();
 
     updatePreviews();
 
     updateHeader();
+
+    updatePlayerHeaders();
 }
 
+function bindMultiplayer() {
+
+    onePlayerBtn.addEventListener(
+        "click",
+        () => {
+
+            game.mode = 1;
+
+            onePlayerBtn.classList.add(
+                "active"
+            );
+
+            twoPlayersBtn.classList.remove(
+                "active"
+            );
+
+            playerSetup.classList.remove(
+                "show"
+            );
+
+            saveGame();
+        }
+    );
+
+    twoPlayersBtn.addEventListener(
+        "click",
+        () => {
+
+            game.mode = 2;
+
+            twoPlayersBtn.classList.add(
+                "active"
+            );
+
+            onePlayerBtn.classList.remove(
+                "active"
+            );
+
+            playerSetup.classList.add(
+                "show"
+            );
+
+            saveGame();
+        }
+    );
+
+    player1NameInput.addEventListener(
+        "input",
+        () => {
+
+            game.playerNames[0] =
+                player1NameInput.value ||
+                "Giocatore 1";
+
+            updatePlayerHeaders();
+
+            saveGame();
+        }
+    );
+
+    player2NameInput.addEventListener(
+        "input",
+        () => {
+
+            game.playerNames[1] =
+                player2NameInput.value ||
+                "Giocatore 2";
+
+            updatePlayerHeaders();
+
+            saveGame();
+        }
+    );
+}
+
+function updatePlayerHeaders() {
+
+    player1Header.textContent =
+        game.playerNames[0];
+
+    player2Header.textContent =
+        game.playerNames[1];
+
+    player1Header.classList.remove(
+        "active-player"
+    );
+
+    player2Header.classList.remove(
+        "active-player"
+    );
+
+    if (
+        game.mode === 2
+    ) {
+
+        if (
+            game.currentPlayer === 0
+        ) {
+
+            player1Header.classList.add(
+                "active-player"
+            );
+
+        } else {
+
+            player2Header.classList.add(
+                "active-player"
+            );
+        }
+
+    }
+}
 /* =====================================
    DICE EVENTS
 ===================================== */
@@ -393,24 +575,33 @@ function sumDice() {
    BONUS
 ===================================== */
 
-function calculateUpperTotal() {
+function calculateUpperTotal(playerIndex = 0) {
+
+    const scores =
+        game.scores[playerIndex];
+
+    if (!scores)
+        return 0;
 
     return (
 
-        (game.scores.ones || 0) +
-        (game.scores.twos || 0) +
-        (game.scores.threes || 0) +
-        (game.scores.fours || 0) +
-        (game.scores.fives || 0) +
-        (game.scores.sixes || 0)
+        (scores.ones || 0) +
+        (scores.twos || 0) +
+        (scores.threes || 0) +
+        (scores.fours || 0) +
+        (scores.fives || 0) +
+        (scores.sixes || 0)
 
     );
 }
 
-function calculateBonus() {
+function calculateBonus(
+    playerIndex
+) {
 
-    return calculateUpperTotal()
-        >= 63
+    return calculateUpperTotal(
+        playerIndex
+    ) >= 63
         ? 35
         : 0;
 }
@@ -419,11 +610,15 @@ function calculateBonus() {
    TOTAL SCORE
 ===================================== */
 
-function calculateTotalScore() {
+function calculateTotalScore(
+    playerIndex
+) {
 
     let total = 0;
 
-    Object.values(game.scores)
+    Object.values(
+        game.scores[playerIndex]
+    )
         .forEach(score => {
 
             if (score !== null)
@@ -431,10 +626,13 @@ function calculateTotalScore() {
 
         });
 
-    total += calculateBonus();
+    total += calculateBonus(
+        playerIndex
+    );
 
     return total;
 }
+
 /* =====================================
    CATEGORY PREVIEW
 ===================================== */
@@ -493,6 +691,11 @@ function getCategoryScore(category) {
 
 function updatePreviews() {
 
+    const currentScores =
+        game.scores[
+        game.currentPlayer
+        ];
+
     document
         .querySelectorAll(".category-row")
         .forEach(row => {
@@ -501,18 +704,26 @@ function updatePreviews() {
                 row.dataset.category;
 
             const preview =
-                row.querySelector(".preview-cell");
+                row.querySelector(
+                    ".preview-cell"
+                );
 
-            if (game.scores[category] !== null) {
+            if (
+                currentScores[category]
+                !== null
+            ) {
 
                 preview.textContent = "";
                 return;
             }
 
             const score =
-                getCategoryScore(category);
+                getCategoryScore(
+                    category
+                );
 
-            preview.textContent = score;
+            preview.textContent =
+                score;
 
             preview.classList.remove(
                 "preview-valid",
@@ -555,25 +766,33 @@ function assignCategory(row) {
     if (game.rollsLeft === 3)
         return;
 
-    if (game.scores[category] !== null)
+    const playerScores =
+        game.scores[
+        game.currentPlayer
+        ];
+
+    if (
+        playerScores[category] !== null
+    )
         return;
 
     const score =
         getCategoryScore(category);
 
-    game.scores[category] =
+    playerScores[category] =
         score;
 
     const scoreCell =
-        row.querySelector(".score-cell");
+        game.currentPlayer === 0
+            ? row.querySelector(
+                ".score-cell-p1"
+            )
+            : row.querySelector(
+                ".score-cell-p2"
+            );
 
     scoreCell.textContent =
         score;
-
-    row.classList.add(
-        "used",
-        "flash"
-    );
 
     playSound(scoreSound);
 
@@ -582,6 +801,14 @@ function assignCategory(row) {
         score === 50
     ) {
         increaseYahtzeeCount();
+    }
+
+    if (game.mode === 2) {
+
+        game.currentPlayer =
+            game.currentPlayer === 0
+                ? 1
+                : 0;
     }
 
     resetTurn();
@@ -607,12 +834,26 @@ function resetTurn() {
 
     game.rollsLeft = 3;
 
-    game.locked =
-        [false, false, false, false, false];
+    game.locked = [
+        false,
+        false,
+        false,
+        false,
+        false
+    ];
+
+    diceElements.forEach(die => {
+
+        die.classList.remove(
+            "locked"
+        );
+
+    });
 
     updateDiceUI();
-}
 
+    updateHeader();
+}
 /* =====================================
    HEADER
 ===================================== */
@@ -626,12 +867,25 @@ function updateHeader() {
         game.rollsLeft;
 
     totalScoreElement.textContent =
-        calculateTotalScore();
+        calculateTotalScore(
+            game.currentPlayer
+        );
 
+    if (
+        currentPlayerElement
+    ) {
+
+        currentPlayerElement
+            .textContent =
+            game.playerNames[
+            game.currentPlayer
+            ];
+    }
+
+    updatePlayerHeaders();
     rollButton.disabled =
         game.rollsLeft <= 0;
 }
-
 /* =====================================
    TOTAL ANIMATION
 ===================================== */
@@ -639,7 +893,9 @@ function updateHeader() {
 function animateTotal() {
 
     const target =
-        calculateTotalScore();
+        calculateTotalScore(
+            game.currentPlayer
+        );
 
     const current =
         Number(
@@ -666,32 +922,48 @@ function animateTotal() {
 
         }, 10);
 }
-
 /* =====================================
    BONUS UI
 ===================================== */
 
 function updateBonusUI() {
 
-    const upperTotal =
-        calculateUpperTotal();
+    const p1Upper =
+        calculateUpperTotal(0);
+
+    const p2Upper =
+        calculateUpperTotal(1);
 
     const bonusRow =
-        document.getElementById("bonusRow");
-
-    document.getElementById(
-        "bonusScore"
-    ).textContent = upperTotal;
-
-    if (upperTotal >= 63) {
-
-        bonusRow.classList.add(
-            "bonus-earned"
+        document.getElementById(
+            "bonusRow"
         );
 
-        if (!bonusUnlocked) {
+    const bonusScoreP1 =
+        document.getElementById(
+            "bonusScoreP1"
+        );
 
-            bonusUnlocked = true;
+    const bonusScoreP2 =
+        document.getElementById(
+            "bonusScoreP2"
+        );
+
+    bonusScoreP1.textContent =
+        p1Upper;
+
+    bonusScoreP2.textContent =
+        p2Upper;
+
+    if (p1Upper >= 63) {
+
+        bonusScoreP1.classList.add(
+            "bonus-active"
+        );
+
+        if (!bonusUnlockedP1) {
+
+            bonusUnlockedP1 = true;
 
             bonusRow.classList.add(
                 "flash"
@@ -708,55 +980,165 @@ function updateBonusUI() {
 
     } else {
 
-        bonusRow.classList.remove(
-            "bonus-earned"
+        bonusScoreP1.classList.remove(
+            "bonus-active"
+        );
+    }
+    if (p2Upper >= 63) {
+
+        bonusScoreP2.classList.add(
+            "bonus-active"
+        );
+
+        if (!bonusUnlockedP2) {
+
+            bonusUnlockedP2 = true;
+
+            bonusRow.classList.add(
+                "flash"
+            );
+
+            setTimeout(() => {
+
+                bonusRow.classList.remove(
+                    "flash"
+                );
+
+            }, 600);
+        }
+
+    } else {
+
+        bonusScoreP2.classList.remove(
+            "bonus-active"
         );
     }
 }
+
 /* =====================================
    GAME END
 ===================================== */
 
 function checkGameEnd() {
-
-    const filled =
-        Object.values(game.scores)
+    console.log(
+        "P1",
+        Object.values(game.scores[0])
             .filter(v => v !== null)
+            .length
+    );
+
+    console.log(
+        "P2",
+        Object.values(game.scores[1])
+            .filter(v => v !== null)
+            .length
+    );
+    const player1Filled =
+        Object.values(
+            game.scores[0]
+        )
+            .filter(
+                v => v !== null
+            )
             .length;
 
-    if (filled < TOTAL_CATEGORIES)
-        return;
+    const player2Filled =
+        Object.values(
+            game.scores[1]
+        )
+            .filter(
+                v => v !== null
+            )
+            .length;
+
+    if (game.mode === 1) {
+
+        if (
+            player1Filled <
+            TOTAL_CATEGORIES
+        )
+            return;
+
+    } else {
+
+        if (
+            player1Filled <
+            TOTAL_CATEGORIES ||
+            player2Filled <
+            TOTAL_CATEGORIES
+        )
+            return;
+    }
 
     endGame();
 }
+
 
 function endGame() {
 
     playSound(winSound);
 
+    const scoreP1 =
+        calculateTotalScore(0);
+
+    const scoreP2 =
+        calculateTotalScore(1);
+
+    let winner;
+
+    if (game.mode === 1) {
+
+        winner =
+            game.playerNames[0];
+
+    } else {
+
+        if (scoreP1 > scoreP2) {
+
+            winner =
+                game.playerNames[0];
+
+        } else if (scoreP2 > scoreP1) {
+
+            winner =
+                game.playerNames[1];
+
+        } else {
+
+            winner =
+                "Pareggio";
+        }
+    }
+
     updateStatistics();
-
-    const modal =
-        document.getElementById(
-            "gameOverModal"
-        );
-
-    modal.classList.add("show");
+    document.getElementById(
+        "finalPlayer1Name"
+    ).textContent =
+        game.playerNames[0];
 
     document.getElementById(
-        "finalScore"
+        "finalPlayer2Name"
     ).textContent =
-        calculateTotalScore();
+        game.playerNames[1];
 
     document.getElementById(
-        "finalBonus"
+        "winnerName"
     ).textContent =
-        calculateBonus();
+        winner;
 
     document.getElementById(
-        "bestCategory"
+        "finalScoreP1"
     ).textContent =
-        getBestCategory();
+        scoreP1;
+
+    document.getElementById(
+        "finalScoreP2"
+    ).textContent =
+        scoreP2;
+
+    document.getElementById(
+        "gameOverModal"
+    ).classList.add("show");
 
     localStorage.removeItem(
         "yahtzee-save"
@@ -868,7 +1250,8 @@ function startNewGame() {
         chance: null
     };
 
-    bonusUnlocked = false;
+    bonusUnlockedP1 = false;
+    bonusUnlockedP2 = false;
 
     document
         .querySelectorAll(".category-row")
@@ -904,7 +1287,8 @@ function startNewGame() {
     updatePreviews();
 
     saveGame();
-}/* =====================================
+}
+/* =====================================
    LOCAL STORAGE SAVE
 ===================================== */
 
@@ -912,12 +1296,29 @@ function saveGame() {
 
     const data = {
 
-        dice: game.dice,
-        locked: game.locked,
-        rollsLeft: game.rollsLeft,
-        turn: game.turn,
-        scores: game.scores
+        mode:
+            game.mode,
 
+        playerNames:
+            game.playerNames,
+
+        currentPlayer:
+            game.currentPlayer,
+
+        dice:
+            game.dice,
+
+        locked:
+            game.locked,
+
+        rollsLeft:
+            game.rollsLeft,
+
+        turn:
+            game.turn,
+
+        scores:
+            game.scores
     };
 
     localStorage.setItem(
@@ -925,7 +1326,6 @@ function saveGame() {
         JSON.stringify(data)
     );
 }
-
 /* =====================================
    LOAD GAME
 ===================================== */
@@ -942,6 +1342,16 @@ function loadGame() {
 
     const data =
         JSON.parse(save);
+
+    game.mode =
+        data.mode ?? 1;
+
+    game.playerNames =
+        data.playerNames ??
+        ["Giocatore 1", "Giocatore 2"];
+
+    game.currentPlayer =
+        data.currentPlayer ?? 0;
 
     game.dice =
         data.dice;
@@ -974,18 +1384,30 @@ function restoreBoard() {
             const category =
                 row.dataset.category;
 
-            const score =
-                game.scores[category];
+            const p1Score =
+                game.scores[0][category];
 
-            if (score === null)
-                return;
+            const p2Score =
+                game.scores[1][category];
 
-            row.classList.add("used");
+            if (p1Score !== null) {
 
-            row.querySelector(
-                ".score-cell"
-            ).textContent = score;
+                row.querySelector(
+                    ".score-cell-p1"
+                ).textContent =
+                    p1Score;
+            }
+
+            if (p2Score !== null) {
+
+                row.querySelector(
+                    ".score-cell-p2"
+                ).textContent =
+                    p2Score;
+            }
         });
+
+    updatePlayerHeaders();
 }
 
 /* =====================================
@@ -1015,8 +1437,17 @@ function updateStatistics() {
     const stats =
         getStats();
 
+    const scoreP1 =
+        calculateTotalScore(0);
+
+    const scoreP2 =
+        calculateTotalScore(1);
+
     const score =
-        calculateTotalScore();
+        Math.max(
+            scoreP1,
+            scoreP2
+        );
 
     stats.gamesPlayed++;
 

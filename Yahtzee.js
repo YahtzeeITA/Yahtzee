@@ -118,6 +118,8 @@ const winSound =
 /* =====================================
    INIT
 ===================================== */
+localStorage.clear();
+location.reload();
 
 init();
 
@@ -1530,8 +1532,7 @@ function playSound(sound) {
 /* =====================================
    STARTUP
 ===================================== */
-localStorage.clear();
-location.reload();
+
 
 loadStatistics();
 

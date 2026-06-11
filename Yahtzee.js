@@ -119,8 +119,6 @@ const winSound =
    INIT
 ===================================== */
 
-localStorage.clear();
-
 init();
 
 function getCurrentScores() {

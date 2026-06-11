@@ -1530,7 +1530,7 @@ function playSound(sound) {
 /* =====================================
    STARTUP
 ===================================== */
-localStorage.removeItem("yahtzee-save");
+localStorage.clear();
 location.reload();
 
 loadStatistics();

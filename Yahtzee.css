@@ -228,7 +228,7 @@ main {
     cursor: pointer;
     font-size: 1.3rem;
     transition: all .25s ease;
-    box-shadow: 0 10px 20px rgba(0,0,0,.35), inset 0 2px 4px rgba(255,255,255,.5), inset 0 -3px 6px rgba(0,0,0,.15);
+    box-shadow: 0 10px 20px rgba(0,0,0,.35), inset 0 2px 4px rgba(255,255,255,.5), inset 0 -3px 6px rgba(0,0,0,.3);
     position: relative;
     overflow: hidden;
     margin-bottom:15px;
@@ -697,134 +697,135 @@ body.light {
 }
 
 .active-player {
-    background: gold !important;
-    color: #000 !important;
-    font-weight: 700;
-    transition: .3s;
+    background: linear-gradient( 145deg, #fcd34d, #fbbf24 40%, #f59e0b );
+    color: #111827;
+    border-radius: 6px;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(0,0,0,.35), inset 0 2px 4px rgba(255,255,255,.6), inset 0 -3px 6px rgba(0,0,0,.3);
+    position: relative;
 }
 
+    /* ========================= */
+    /* RESPONSIVE */
+    /* ========================= */
 
+    @media (max-width: 1200px) {
 
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
+        main {
+            grid-template-columns: 1fr;
+        }
 
-@media (max-width: 1200px) {
+        .stats-panel {
+            order: 3;
+        }
 
-    main {
-        grid-template-columns: 1fr;
+        .game-modes {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .player-setup {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 
-    .stats-panel {
-        order: 3;
+    @media (max-width: 768px) {
+
+        .top-bar {
+            flex-direction: column;
+        }
+
+        .game-info {
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .die {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+
+        .player-setup {
+            width: 100%;
+            flex-direction: column;
+        }
+
+            .player-setup input {
+                width: 100%;
+            }
+
+        /* ========================= */
+        /* SCOREBOARD NO SCROLL FIX */
+        /* ========================= */
+
+        .scoreboard table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .scoreboard td,
+        .scoreboard th {
+            padding: 5px 6px;
+            font-size: 0.75rem;
+        }
+
+            .scoreboard td:first-child,
+            .scoreboard th:first-child {
+                width: 100px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+        .score-cell-p1,
+        .score-cell-p2,
+        .preview-cell {
+            width: 70px;
+        }
     }
 
-    .game-modes {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+    @media (max-width: 500px) {
 
-    .player-setup {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
+        .die {
+            width: 65px;
+            height: 65px;
+            font-size: 1.7rem;
+        }
 
-@media (max-width: 768px) {
-
-    .top-bar {
-        flex-direction: column;
-    }
-
-    .game-info {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .die {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-    }
-
-    .player-setup {
-        width: 100%;
-        flex-direction: column;
-    }
-
-        .player-setup input {
+        .roll-btn {
             width: 100%;
         }
 
-    /* ========================= */
-    /* SCOREBOARD NO SCROLL FIX */
-    /* ========================= */
+        /* ========================= */
+        /* TABLETTO / MOBILE SCOREBOARD FIX */
+        /* ========================= */
 
-    .scoreboard table {
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    .scoreboard td,
-    .scoreboard th {
-        padding: 5px 6px;
-        font-size: 0.75rem;
-    }
-
-        .scoreboard td:first-child,
-        .scoreboard th:first-child {
-            width: 100px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .scoreboard table {
+            width: 100%;
+            min-width: unset;
+            table-layout: fixed;
         }
 
-    .score-cell-p1,
-    .score-cell-p2,
-    .preview-cell {
-        width: 70px;
-    }
-}
-@media (max-width: 500px) {
-
-    .die {
-        width: 65px;
-        height: 65px;
-        font-size: 1.7rem;
-    }
-
-    .roll-btn {
-        width: 100%;
-    }
-
-    /* ========================= */
-    /* TABLETTO / MOBILE SCOREBOARD FIX */
-    /* ========================= */
-
-    .scoreboard table {
-        width: 100%;
-        min-width: unset;
-        table-layout: fixed;
-    }
-
-    .scoreboard td,
-    .scoreboard th {
-        padding: 4px 6px;
-        font-size: 0.7rem;
-    }
-
-        .scoreboard td:first-child,
-        .scoreboard th:first-child {
-            width: 90px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .scoreboard td,
+        .scoreboard th {
+            padding: 4px 6px;
+            font-size: 0.7rem;
         }
 
-    .score-cell-p1,
-    .score-cell-p2,
-    .preview-cell {
-        width: 60px;
+            .scoreboard td:first-child,
+            .scoreboard th:first-child {
+                width: 90px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+        .score-cell-p1,
+        .score-cell-p2,
+        .preview-cell {
+            width: 60px;
+        }
     }
-}

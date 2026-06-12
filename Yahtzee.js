@@ -120,7 +120,28 @@ const winSound =
 ===================================== */
 
 init();
+function updatePlayerNamesEverywhere() {
 
+    document.getElementById(
+        "player1Header"
+    ).textContent =
+        game.playerNames[0];
+
+    document.getElementById(
+        "player2Header"
+    ).textContent =
+        game.playerNames[1];
+
+    document.getElementById(
+        "player1ScoreLabel"
+    ).textContent =
+        game.playerNames[0];
+
+    document.getElementById(
+        "player2ScoreLabel"
+    ).textContent =
+        game.playerNames[1];
+}
 function getCurrentScores() {
 
     return game.scores[
@@ -168,6 +189,8 @@ function init() {
     updateHeader();
 
     updatePlayerHeaders();
+
+
 }
 
 function bindMultiplayer() {
@@ -225,7 +248,8 @@ function bindMultiplayer() {
                 "Giocatore 1";
 
             updatePlayerHeaders();
-
+            updatePlayerNamesEverywhere();
+            updateHeader();
             saveGame();
         }
     );
@@ -239,7 +263,8 @@ function bindMultiplayer() {
                 "Giocatore 2";
 
             updatePlayerHeaders();
-
+            updatePlayerNamesEverywhere();
+            updateHeader();
             saveGame();
         }
     );
@@ -858,6 +883,20 @@ function resetTurn() {
    HEADER
 ===================================== */
 
+function updateScoreBoxes() {
+
+    document.getElementById(
+        "totalScoreP1"
+    ).textContent =
+        calculateTotalScore(0);
+
+    document.getElementById(
+        "totalScoreP2"
+    ).textContent =
+        calculateTotalScore(1);
+
+}
+
 function updateHeader() {
 
     turnNumberElement.textContent =
@@ -883,6 +922,7 @@ function updateHeader() {
     }
 
     updatePlayerHeaders();
+    updateScoreBoxes();
     rollButton.disabled =
         game.rollsLeft <= 0;
 }
@@ -964,6 +1004,7 @@ function updateBonusUI() {
         if (!bonusUnlockedP1) {
 
             bonusUnlockedP1 = true;
+            increaseBonusCount();
 
             bonusRow.classList.add(
                 "flash"
@@ -993,6 +1034,7 @@ function updateBonusUI() {
         if (!bonusUnlockedP2) {
 
             bonusUnlockedP2 = true;
+            increaseBonusCount();
 
             bonusRow.classList.add(
                 "flash"
@@ -1426,10 +1468,25 @@ function getStats() {
 
         gamesPlayed: 0,
         bestScore: 0,
-        totalScore: 0,
+        bonus63Count: 0,
         yahtzeeCount: 0
 
     };
+}
+
+function increaseBonusCount() {
+
+    const stats =
+        getStats();
+
+    stats.bonus63Count++;
+
+    localStorage.setItem(
+        "yahtzee-stats",
+        JSON.stringify(stats)
+    );
+
+    loadStatistics();
 }
 
 function updateStatistics() {
@@ -1450,8 +1507,6 @@ function updateStatistics() {
         );
 
     stats.gamesPlayed++;
-
-    stats.totalScore += score;
 
     stats.bestScore =
         Math.max(
@@ -1483,14 +1538,9 @@ function loadStatistics() {
         stats.bestScore;
 
     document.getElementById(
-        "averageScore"
+        "bonus63Count"
     ).textContent =
-        stats.gamesPlayed
-            ? Math.round(
-                stats.totalScore /
-                stats.gamesPlayed
-            )
-            : 0;
+        stats.bonus63Count || 0;
 
     document.getElementById(
         "yahtzeeCount"

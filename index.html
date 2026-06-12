@@ -50,27 +50,20 @@
                     Nuova Partita
                 </button>
             </div>
-
-            <div class="game-info">
-
-                <div class="info-card">
-                    <span>Punteggio</span>
-                    <strong id="totalScore">0</strong>
-                </div>
-
-                <div class="info-card">
-                    <span>Turno</span>
-                    <strong id="turnNumber">1</strong>
-                </div>
-
-                <div class="info-card">
-                    <span>Lanci Rimasti</span>
-                    <strong id="rollsLeft">3</strong>
-                </div>
-
-               
-
+            <div class="info-card">
+                <span>Punteggio</span>
+                <strong id="totalScore">0</strong>
             </div>
+            <div class="info-card">
+                <span>Turno</span>
+                <strong id="turnNumber">1</strong>
+            </div>
+
+            <div class="info-card">
+                <span>Lanci Rimasti</span>
+                <strong id="rollsLeft">3</strong>
+            </div>
+
 
         </header>
 
@@ -113,7 +106,7 @@
                     🎲 Lancia Dadi
                 </button>
                 <div class="current-player">
-                    <span>Giocatore Attivo:</span>
+                    <span>Turno di:</span>
                     <strong id="currentPlayer">
                         Giocatore 1
                     </strong>
@@ -266,40 +259,71 @@
                 </table>
 
             </section>
+            <section>
+                <aside class="stats-panel">
+                    <h2>Punteggio</h2>
+                    <div class="game-points">
 
-            <!-- STATS -->
+                        <div class="info-points">
 
-            <aside class="stats-panel">
+                            <span id="player1ScoreLabel">
+                                Giocatore 1:
+                            </span>
 
-                <h2>Statistiche</h2>
+                            <strong id="totalScoreP1">
+                                0
+                            </strong>
 
-                <div class="stat">
-                    <span>Partite</span>
-                    <strong id="gamesPlayed">0</strong>
-                </div>
+                        </div>
 
-                <div class="stat">
-                    <span>Miglior Punteggio</span>
-                    <strong id="bestScore">0</strong>
-                </div>
+                        <div class="info-points">
 
-                <div class="stat">
-                    <span>Media</span>
-                    <strong id="averageScore">0</strong>
-                </div>
+                            <span id="player2ScoreLabel">
+                                Giocatore 2:
+                            </span>
 
-                <div class="stat">
-                    <span>Yahtzee Totali</span>
-                    <strong id="yahtzeeCount">0</strong>
-                </div>
+                            <strong id="totalScoreP2">
+                                0
+                            </strong>
 
-                <button id="newStat">
-                    Azzera statistiche
-                </button>
+                        </div>
 
-            </aside>
+                    </div>
 
-        </main>
+                </aside>
+                <!-- STATS -->
+
+                <aside class="stats-panel">
+
+                    <h2>Statistiche</h2>
+
+                    <div class="stat">
+                        <span>Partite</span>
+                        <strong id="gamesPlayed">0</strong>
+                    </div>
+
+                    <div class="stat">
+                        <span>Miglior Punteggio</span>
+                        <strong id="bestScore">0</strong>
+                    </div>
+
+                    <div class="stat">
+                        <span>Bonus 63+</span>
+                        <strong id="bonus63Count">0</strong>
+                    </div>
+
+                    <div class="stat">
+                        <span>Yahtzee Totali</span>
+                        <strong id="yahtzeeCount">0</strong>
+                    </div>
+
+                    <button id="newStat">
+                        Azzera statistiche
+                    </button>
+
+                </aside>
+            </section>
+</main>
 
     </div>
 

@@ -53,30 +53,22 @@ body {
 }
 
 .logo h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     line-height: 1;
     color: var(--gold);
     text-shadow: 0 0 15px rgba(251,191,36,.5);
 }
-
+h2 {
+    color: lightgray;
+    text-shadow: 2px 2px 3px black;
+}
 .game-info {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
 }
 .info-card {
-    background: var(--panel);
-    padding: 8px 10px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    min-width: 90px;
-    text-align: center;
-    background: linear-gradient( 180deg, rgba(255,255,255,.18), rgba(255,255,255,.06) );
-    border: 1px solid rgba(255,255,255,.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 10px 25px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25), inset 0 -2px 4px rgba(0,0,0,.15);
-
+display: none;
 }
 
     .info-card span {
@@ -169,7 +161,7 @@ main {
     }
 
     .die[data-index="2"] {
-        background-color: #bfdbfe;
+        background-color: #a9c8fc;
     }
 
     .die[data-index="3"] {
@@ -403,6 +395,7 @@ td {
     padding: 20px;
     box-shadow: var(--shadow);
     height: fit-content;
+    margin-bottom: 20px;
     background: linear-gradient( 180deg, rgba(255,255,255,.18), rgba(255,255,255,.06) );
     border: 1px solid rgba(255,255,255,.18);
     backdrop-filter: blur(12px);
@@ -565,7 +558,7 @@ body.light {
 }
 
     .mode-btn:hover {
-        transform: translateY(-2px);
+        transform: translateY(-5px);
     }
 
     .mode-btn.active {
@@ -673,10 +666,31 @@ body.light {
     box-shadow: inset 4px 0 0 var(--gold);
 }
 
+.game-points {
+    margin-bottom: 15px;
+}
+
+.info-points {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#player1ScoreLabel,
+#player2ScoreLabel {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#totalScoreP1,
+#totalScoreP2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
 /* ==========================================
    WINNER MODAL
 ========================================== */
-
 #winnerName {
     color: var(--gold);
     font-size: 1.3rem;

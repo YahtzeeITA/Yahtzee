@@ -829,3 +829,30 @@ body.light {
             width: 60px;
         }
     }
+/* ==========================================
+   FOOTER
+========================================== */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.footer {
+    text-align: center;
+    padding: 1px;
+    font-size: 0.60rem;
+    color: rgba(255,255,255,.55);
+    border-top: 1px solid rgba( 255, 255, 255, .08 );
+    margin-top: 20px;
+}
+
+    .footer strong {
+        color: #ccc793;
+        font-weight: 600;
+    }

@@ -102,6 +102,8 @@ const player2Header =
 /* =====================================
    AUDIO
 ===================================== */
+const inizioSound =
+    document.getElementById("inizioSound");
 
 const rollSound =
     document.getElementById("rollSound");
@@ -114,6 +116,18 @@ const scoreSound =
 
 const winSound =
     document.getElementById("winSound");
+
+const onePlayerSound =
+    document.getElementById("onePlayerSound");
+
+const twoPlayerSound =
+    document.getElementById("twoPlayerSound");
+
+const newGameSound =
+    document.getElementById("newGameSound");
+
+const resetSound =
+    document.getElementById("resetSound");
 
 /* =====================================
    INIT
@@ -190,7 +204,7 @@ function init() {
 
     updatePlayerHeaders();
 
-
+    loadStatistics();
 }
 
 function bindMultiplayer() {
@@ -213,6 +227,8 @@ function bindMultiplayer() {
                 "show"
             );
 
+            playSound(onePlayerSound);
+
             saveGame();
         }
     );
@@ -234,6 +250,8 @@ function bindMultiplayer() {
             playerSetup.classList.add(
                 "show"
             );
+
+            playSound(twoPlayerSound);
 
             saveGame();
         }
@@ -1219,13 +1237,17 @@ document
     .addEventListener(
         "click",
         newGame
+
+
     );
 
 document
     .getElementById("newGameButton")
     .addEventListener(
         "click",
-        newGame
+        newGame,
+
+
 );
 document
     .getElementById("newStat")
@@ -1236,99 +1258,33 @@ document
 
 function newGame() {
 
+    playSound(newGameSound);
+
     localStorage.removeItem(
         "yahtzee-save"
     );
 
-    location.reload();
+    setTimeout(() => {
+
+        location.reload();
+
+    }, 800);
+
 }
+
 function cancelStats() {
+
+    playSound(resetSound);
 
     localStorage.removeItem(
         "yahtzee-stats"
     );
 
-    location.reload();
-}
-function startNewGame() {
+    setTimeout(() => {
 
-    if (
-        !confirm(
-            "Vuoi iniziare una nuova partita?"
-        )
-    ) {
-        return;
-    }
+        location.reload();
 
-    localStorage.removeItem(
-        "yahtzee-save"
-    );
-
-    game.dice =
-        [1, 1, 1, 1, 1];
-
-    game.locked =
-        [false, false, false, false, false];
-
-    game.rollsLeft = 3;
-
-    game.turn = 1;
-
-    game.scores = {
-
-        ones: null,
-        twos: null,
-        threes: null,
-        fours: null,
-        fives: null,
-        sixes: null,
-
-        threeKind: null,
-        fourKind: null,
-        fullHouse: null,
-        smallStraight: null,
-        largeStraight: null,
-        yahtzee: null,
-        chance: null
-    };
-
-    bonusUnlockedP1 = false;
-    bonusUnlockedP2 = false;
-
-    document
-        .querySelectorAll(".category-row")
-        .forEach(row => {
-
-            row.classList.remove(
-                "used",
-                "flash"
-            );
-
-            row.querySelector(
-                ".score-cell"
-            ).textContent = "";
-
-            row.querySelector(
-                ".preview-cell"
-            ).textContent = "";
-        });
-
-    document
-        .getElementById("bonusRow")
-        .classList.remove(
-            "bonus-earned",
-            "flash"
-        );
-
-    updateDiceUI();
-
-    updateHeader();
-
-    updateBonusUI();
-
-    updatePreviews();
-
-    saveGame();
+    }, 800);
 }
 /* =====================================
    LOCAL STORAGE SAVE
@@ -1581,12 +1537,16 @@ function playSound(sound) {
    STARTUP
 ===================================== */
 
-loadStatistics();
+if (
+    !sessionStorage.getItem(
+        "introPlayed"
+    )
+) {
 
-updateBonusUI();
+    playSound(inizioSound);
 
-updateHeader();
-
-updatePreviews();
-
-saveGame();
+    sessionStorage.setItem(
+        "introPlayed",
+        "true"
+    );
+}
